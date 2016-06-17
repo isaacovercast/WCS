@@ -1,0 +1,33 @@
+// Priors and rules file
+// *********************
+
+[PARAMETERS]
+//#isInt? #name	#dist.#min	#max
+//all N are in number of haploid individuals
+1  NA1     unif        100      100000     output
+1  NPUG     unif        100      100000     output
+1  NNUT     unif        100      100000     output
+0  EX1     logunif     1e-2     1          hide
+0  EX2     logunif     1e-2     1          hide
+0  M1P      logunif     1e-5     1e-2       output
+0  M2P      logunif     1e-5     1e-2       output
+0  M1N      logunif     1e-5     1e-2       output
+0  M2N      logunif     1e-5     1e-2       output
+1  TD2     unif        10       100000     output
+0  TCONTACT unif	0	1	   output 
+0  TISOLATE unif        0       1          output
+
+[RULES]
+
+[COMPLEX PARAMETERS]
+1  TD1  =  TD2*TISOLATE      output
+1  TD0  =  TD1*TCONTACT output
+0  EX3  =  log(EX1)   hide
+0  EX4  =  log(EX2)   hide
+0  EXB  =  EX3/TD1    output
+0  EXN  =  EX4/TD1    output
+1  N0B  =  NPUG*EX1    hide
+1  N0N  =  NNUT*EX2    hide
+1  N0A  =  N0B+N0N    hide
+1  NA   =  N0A+NA1    hide
+0  RS   =  NA/N0A     hide
